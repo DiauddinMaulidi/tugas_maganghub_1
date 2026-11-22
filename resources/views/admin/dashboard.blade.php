@@ -32,14 +32,13 @@
 
     <div class="p-2 flex gap-3">
         <button onClick="showTab('pengguna', this)" class="tab-btn bg-blue-300 rounded-lg p-3 cursor-pointer">Manajemen Pengguna</button>
-        <button onClick="showTab('guru', this)" class="tab-btn p-3 cursor-pointer">Data Guru</button>
+        <!-- <button onClick="showTab('guru', this)" class="tab-btn p-3 cursor-pointer">Data Guru</button> -->
         <button onClick="showTab('siswa', this)" class="tab-btn p-3 cursor-pointer">Data Siswa</button>
         <button onClick="showTab('kelas', this)" class="tab-btn p-3 cursor-pointer">Data Kelas</button>
-        <button onClick="showTab('sekolah', this)" class="tab-btn p-3 cursor-pointer">Data Sekolah</button>
     </div>
 
     <div id="pengguna" class="tab-content">
-        <table class="w-[100%] mt-[20px] border-collapse">
+        <table class="w-full mt-[20px] border-collapse">
             <thead>
                 <tr>
                     <th class="bg-[#1e40af] p-[13px] text-left">No</th>
@@ -79,50 +78,64 @@
         </table>
     </div>
 
-    <!-- guru -->
-    <div id="guru" class="tab-content hidden">
-        <h2 class="text-lg font-bold mb-3">Data Guru</h2>
-
-        <table class="w-full border-collapse">
-            <thead class="bg-blue-800 text-white">
-                <tr>
-                    <th class="p-3">No</th>
-                    <th>Nama Guru</th>
-                    <th>NIP</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td colspan="4" class="p-3 text-center">
-                        Data guru belum tersedia.
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
     <!-- siswa -->
     <div id="siswa" class="tab-content hidden">
-        <h2 class="text-lg font-bold mb-3">Data Siswa</h2>
-
         <table class="w-full border-collapse">
-            <thead class="bg-blue-800 text-white">
+            <thead>
                 <tr>
-                    <th class="p-3">No</th>
-                    <th>Nama Siswa</th>
-                    <th>NISN</th>
-                    <th>Kelas</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">No</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">Nama Siswa</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">NIS</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">Jenis Kelamin</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">TTL</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">Alamat</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">Kelas</th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr>
-                    <td colspan="4" class="p-3 text-center">
-                        Data siswa belum tersedia.
-                    </td>
-                </tr>
+                @forelse ($siswas as $siswa)
+                    <tr>
+                        <td class="border border-[#ddd] p-1">
+                            {{ $loop->iteration }}
+                        </td>
+
+                        <td class="border border-[#ddd] p-1">
+                            {{ $siswa->nama }}
+                        </td>
+
+                        <td class="border border-[#ddd] p-1">
+                            {{ $siswa->nis }}
+                        </td>
+
+
+                        <td class="border border-[#ddd] p-1">
+                            {{ $siswa->jenis_kelamin }}
+                        </td>
+
+                        <td class="border border-[#ddd] p-1">
+                            {{ $siswa->tempat_lahir }},
+                            {{ \Carbon\Carbon::parse($siswa->tanggal_lahir)->format('d-m-Y') }}
+                        </td>
+
+                        <td class="border border-[#ddd] p-1">
+                            {{ $siswa->alamat }}
+                        </td>
+
+                        <td class="border border-[#ddd] p-1">
+                            {{ $siswa->kelas ?? '-' }}
+                        </td>
+                    </tr>
+
+                @empty
+
+                    <tr>
+                        <td colspan="8" class="text-center p-4">
+                            Belum ada data siswa.
+                        </td>
+                    </tr>
+
+                @endforelse
             </tbody>
         </table>
     </div>

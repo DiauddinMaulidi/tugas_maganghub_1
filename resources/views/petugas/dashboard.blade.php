@@ -3,7 +3,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Petugas</title>
+    <title>Dashboard Guru</title>
     <style>
         body {
             font-family: Arial;
@@ -20,11 +20,11 @@
 <body>
 
 <div class="card">
-    <h1>Dashboard Petugas Sekolah</h1>
+    <h1>Dashboard Guru Sekolah</h1>
 
     <p>Selamat datang, {{ Auth::user()->name }}</p>
 
-    <h3>Menu Petugas</h3>
+    <h3>Menu Guru</h3>
     <ul>
         <li>Melihat Data Siswa</li>
         <li>Mengelola Data Administrasi</li>

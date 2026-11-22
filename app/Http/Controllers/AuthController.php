@@ -23,8 +23,9 @@ class AuthController extends Controller
         ]);
 
         // mencari user berdasarkan email
-        $user = User::where('email', $credentials['email'])
-                    ->first();
+        $user = User::with('roles')
+                ->where('email', $credentials['email'])
+                ->first();
 
         // memeriksa user dan status aktif
         if (!$user || !$user->is_active) {
@@ -54,8 +55,8 @@ class AuthController extends Controller
             return redirect()->route('admin.dashboard');
         }
 
-        if ($roles->contains('petugas')) {
-            return redirect()->route('petugas.dashboard');
+        if ($roles->contains('guru')) {
+            return redirect()->route('guru.dashboard');
         }
 
         // logout jika tidak memiliki role

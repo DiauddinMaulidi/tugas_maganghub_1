@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\GuruController;
 
 // halaman login untuk pengguna yang belum login
 Route::middleware('guest')->group(function () {
@@ -47,3 +48,6 @@ Route::get('/users', [UserController::class, 'index'])
 
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
     ->name('admin.dashboard');
+
+Route::get('/guru/dashboard', [AdminController::class, 'dashboard'])
+    ->name('guru.dashboard');

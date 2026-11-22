@@ -21,11 +21,11 @@ class UserSeeder extends Seeder
             ]
         );
 
-        // Membuat akun Petugas Sekolah
-        $petugas = User::updateOrCreate(
-            ['email' => 'petugas@gmail.com'],
+        // Membuat akun Guru Sekolah
+        $guru = User::updateOrCreate(
+            ['email' => 'guruAgama@gmail.com'],
             [
-                'name' => 'Petugas Sekolah',
+                'name' => 'Tantowi Ahmad',
                 'password' => Hash::make('petugas123'),
                 'is_active' => true,
             ]
@@ -33,11 +33,10 @@ class UserSeeder extends Seeder
 
         // Mengambil role
         $roleAdmin = Role::where('name', 'admin')->firstOrFail();
-        $rolePetugas = Role::where('name', 'petugas')->firstOrFail();
+        $roleGuru = Role::where('name', 'guru')->firstOrFail();
 
         // Menghubungkan user dengan role
         $admin->roles()->syncWithoutDetaching([$roleAdmin->id]);
-        $petugas->roles()->syncWithoutDetaching([$rolePetugas->id]);
-
+        $guru->roles()->syncWithoutDetaching([$roleGuru->id]);
     }
 }
