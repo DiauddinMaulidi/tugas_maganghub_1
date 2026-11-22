@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 
 // halaman login untuk pengguna yang belum login
 Route::middleware('guest')->group(function () {
@@ -43,3 +44,6 @@ Route::get('/', function () {
 
 Route::get('/users', [UserController::class, 'index'])
     ->name('users.index');
+
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
+    ->name('admin.dashboard');
