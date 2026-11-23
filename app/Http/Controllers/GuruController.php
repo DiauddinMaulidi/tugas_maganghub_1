@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Guru;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class GuruController extends Controller
 {
@@ -13,34 +15,20 @@ class GuruController extends Controller
         return view('admin.guru.index', compact('gurus'));
     }
 
-    // public function create()
-    // {
-        
-    // }
+    public function dashboard()
+        {
+            $guru = Auth::user();
 
-    // public function store(Request $request)
-    // {
-        
-    // }
+            // Pastikan akun memiliki role guru
+            if (!$guru->roles()->where('name', 'guru')->exists()) {
+                abort(403, 'Anda tidak memiliki akses sebagai guru.');
+            }
 
-    // public function show(string $id)
-    // {
-        
-    // }
+            // Ambil kelas yang ditugaskan kepada guru
+            $kelas = $guru->kelasAbsensi()
+                ->withCount('siswas')
+                ->get();
 
-
-    // public function edit(string $id)
-    // {
-        
-    // }
-
-    // public function update(Request $request, string $id)
-    // {
-        
-    // }
-
-    // public function destroy(string $id)
-    // {
-        
-    // }
+            return view('guru.dashboard', compact('guru', 'kelas'));
+        }
 }

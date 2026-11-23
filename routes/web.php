@@ -24,18 +24,21 @@ Route::middleware('auth')->group(function () {
 
     // Dashboard Admin
     Route::middleware('role:admin')->prefix('admin')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('admin.dashboard');
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])
+            ->name('admin.dashboard');
 
         Route::get('/users', [UserController::class, 'index'])
             ->name('admin.users');
+
+        Route::post('/guru-kelas', [AdminController::class, 'assignGuruKelas'])
+            ->name('admin.guru-kelas');
     });
 
-    Route::middleware('role:petugas')->prefix('petugas')->group(function () {
-        Route::get('dashboard', function () {
-            return view('petugas.dashboard');
-        })->name('petugas.dashboard');
+    // Dashboard Guru
+    Route::middleware('role:guru')->prefix('guru')->group(function () {
+
+        Route::get('/dashboard', [GuruController::class, 'dashboard'])
+            ->name('guru.dashboard');
     });
 });
 
@@ -49,5 +52,5 @@ Route::get('/users', [UserController::class, 'index'])
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
     ->name('admin.dashboard');
 
-Route::get('/guru/dashboard', [AdminController::class, 'dashboard'])
-    ->name('guru.dashboard');
+Route::post('/admin/guru-kelas', [AdminController::class, 'assignGuruKelas'])
+    ->name('admin.guru-kelas');

@@ -33,4 +33,14 @@ class Kelas extends Model
     public function waliKelas() {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function guruPengabsen()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'guru_kelas',
+            'kelas_id',
+            'user_id'
+        );
+    }
 }

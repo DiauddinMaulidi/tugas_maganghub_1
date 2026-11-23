@@ -142,6 +142,63 @@
 
     <!-- kelas -->
      <div id="kelas" class="tab-content hidden">
+        <h3 class="text-lg font-semibold mb-4">
+            Tambahkan Guru
+        </h3>
+
+         @if (session('success'))
+            <div class="bg-green-100 text-green-700 p-3 rounded mb-3">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="bg-red-100 text-red-700 p-3 rounded mb-3">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
+
+        <form action="{{ route('admin.guru-kelas') }}" method="POST">
+            @csrf
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-2 font-medium">Pilih Guru</label>
+                    <select name="user_id" required
+                        class="w-full border rounded p-2">
+                        <option value="">-- Pilih Guru --</option>
+
+                        @foreach ($guruUsers as $guru)
+                            <option value="{{ $guru->id }}">
+                                {{ $guru->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block mb-2 font-medium">Pilih Kelas</label>
+                    <select name="kelas_id" required
+                        class="w-full border rounded p-2">
+                        <option value="">-- Pilih Kelas --</option>
+
+                        @foreach ($kelas as $item)
+                            <option value="{{ $item->id }}">
+                                {{ $item->nama_kelas }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit"
+                class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                Simpan Penugasan
+            </button>
+        </form>
+
         <table class="w-full border-collapse">
             <thead>
                 <tr>

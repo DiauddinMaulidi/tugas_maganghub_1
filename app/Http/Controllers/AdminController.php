@@ -32,4 +32,24 @@ class AdminController extends Controller
         // mengirim data ke halaman Blade
         return view('admin.dashboard', compact('users', 'gurus', 'siswas', 'kelas', 'guruUsers'));
     }
+
+    public function assignGuruKelas(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'kelas_id' => 'required|exists:kelas,id',
+        ]);
+
+        $guru = User::whereHas('roles', function ($query) {
+            $query->where('name', 'guru');
+        })->findOrFail($request->user_id);
+
+        $guru->kelasAbsensi()->syncWithoutDetaching([
+            $request->kelas_id
+        ]);
+
+        return redirect()
+            ->route('admin.dashboard')
+            ->with('success', 'Guru berhasil ditambahkan ke kelas absensi.');
+    }
 }

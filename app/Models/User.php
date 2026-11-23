@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\Kelas;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
@@ -35,5 +36,15 @@ class User extends Authenticatable
             Role::class,
             'user_roles'
         )->withTimestamps();
+    }
+
+    public function kelasAbsensi()
+    {
+        return $this->belongsToMany(
+            Kelas::class,
+            'guru_kelas',
+            'user_id',
+            'kelas_id'
+        );
     }
 }
