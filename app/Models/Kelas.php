@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Siswa;
 use App\Models\Guru;
 use App\Models\User;
+use App\Models\Absensi;
 
 class Kelas extends Model
 {
@@ -42,5 +43,9 @@ class Kelas extends Model
             'kelas_id',
             'user_id'
         );
+    }
+
+    public function absensis() {
+        return $this->hasMany(Absensi::class);
     }
 }

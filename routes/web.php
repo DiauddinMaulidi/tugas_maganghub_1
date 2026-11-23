@@ -39,6 +39,12 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/dashboard', [GuruController::class, 'dashboard'])
             ->name('guru.dashboard');
+
+        Route::get('/kelas/{id}/absensi', [GuruController::class, 'absensi'])
+            ->name('guru.absensi');
+
+        Route::post('/kelas/{id}/absensi', [GuruController::class, 'simpanAbsensi'])
+            ->name('guru.absensi.simpan');
     });
 });
 
