@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Kelas;
 
 class Siswa extends Model
 {
@@ -16,5 +17,10 @@ class Siswa extends Model
         'tanggal_lahir',
         'alamat',
         'kelas',
+        'kelas_id',
     ];
+
+    public function kelas() {
+        return $this->belongsTo(Kelas::class, 'kelas_id');
+    }
 }

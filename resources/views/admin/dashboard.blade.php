@@ -142,37 +142,66 @@
 
     <!-- kelas -->
      <div id="kelas" class="tab-content hidden">
-        <h2 class="text-lg font-bold mb-3">Data Kelas</h2>
         <table class="w-full border-collapse">
-            <thead class="bg-blue-800 text-white">
+            <thead>
                 <tr>
-                    <th class="p-3">No</th>
-                    <th>Nama Kelas</th>
-                    <th>Wali Kelas</th>
-                    <th>Jumlah Siswa</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">No</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">Nama Kelas</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">Tingkat</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">Tahun Ajaran</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">Wali Kelas</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">Jumlah Siswa</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">Aksi</th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr>
-                    <td colspan="4" class="p-3 text-center">
-                        Data kelas belum tersedia.
-                    </td>
-                </tr>
+                @forelse ($kelas as $item)
+                    <tr>
+                        <td class="border border-[#ddd] p-1">
+                            {{ $loop->iteration }}
+                        </td>
+
+                        <td class="border border-[#ddd] p-1">
+                            {{ $item->nama_kelas }}
+                        </td>
+
+                        <td class="border border-[#ddd] p-1">
+                            {{ $item->tingkat }}
+                        </td>
+
+                        <td class="border border-[#ddd] p-1">
+                            {{ $item->tahun_ajaran }}
+                        </td>
+
+                        <td class="border border-[#ddd] p-1">
+                            {{ $item->waliKelas->name ?? 'Belum ditentukan' }}
+                        </td>
+
+                        <td class="border border-[#ddd] p-1">
+                            {{ $item->siswas_count }} Siswa
+                        </td>
+                        <td class="border border-[#ddd] p-2">
+                            <button class="bg-yellow-400 px-2 py-1 rounded">
+                                Edit
+                            </button>
+
+                            <button class="bg-red-500 text-white px-2 py-1 rounded">
+                                Hapus
+                            </button>
+                        </td>
+                    </tr>
+
+                @empty
+                    <tr>
+                        <td colspan="7" class="text-center p-4">
+                            Belum ada data kelas.
+                        </td>
+                    </tr>
+                @endforelse
+
             </tbody>
         </table>
-    </div>
-
-    <!-- sekolah -->
-     <div id="sekolah" class="tab-content hidden">
-        <h2 class="text-lg font-bold mb-3">Data Sekolah</h2>
-        <div class="border rounded-lg p-4">
-            <p>Nama Sekolah: Belum diatur</p>
-            <p>Alamat: Belum diatur</p>
-            <p>NPSN: Belum diatur</p>
-            <p>Akreditasi: Belum diatur</p>
-        </div>
-
     </div>
 
     <form action="{{ route('logout') }}" method="POST">
