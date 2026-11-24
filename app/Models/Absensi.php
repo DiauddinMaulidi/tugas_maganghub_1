@@ -22,20 +22,23 @@ class Absensi extends Model
 
     protected $casts = [
         'tanggal' => 'date',
-    ]
+    ];
 
     // relasi ke siswa
-    public function siswa() {
+    public function siswa()
+    {
         return $this->belongsTo(Siswa::class);
     }
 
     // relasi ke guru
-    public function guru() {
+    public function guru()
+    {
         return $this->belongsTo(Guru::class);
     }
 
     // relasi ke kelas
-    public function kelas() {
+    public function kelas()
+    {
         return $this->belonsTo(Kelas::class);
     }
 }
