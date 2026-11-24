@@ -32,9 +32,9 @@
 
     <div class="p-2 flex gap-3">
         <button onClick="showTab('pengguna', this)" class="tab-btn bg-blue-300 rounded-lg p-3 cursor-pointer">Manajemen Pengguna</button>
-        <!-- <button onClick="showTab('guru', this)" class="tab-btn p-3 cursor-pointer">Data Guru</button> -->
         <button onClick="showTab('siswa', this)" class="tab-btn p-3 cursor-pointer">Data Siswa</button>
         <button onClick="showTab('kelas', this)" class="tab-btn p-3 cursor-pointer">Data Kelas</button>
+        <button onClick="showTab('menu', this)" class="tab-btn p-3 cursor-pointer">Atur Menu</button>
     </div>
 
     <div id="pengguna" class="tab-content">
@@ -141,7 +141,7 @@
     </div>
 
     <!-- kelas -->
-     <div id="kelas" class="tab-content hidden">
+    <div id="kelas" class="tab-content hidden">
         <h3 class="text-lg font-semibold mb-4">
             Tambahkan Guru
         </h3>
@@ -246,6 +246,57 @@
                             <button class="bg-red-500 text-white px-2 py-1 rounded">
                                 Hapus
                             </button>
+                        </td>
+                    </tr>
+
+                @empty
+                    <tr>
+                        <td colspan="7" class="text-center p-4">
+                            Belum ada data kelas.
+                        </td>
+                    </tr>
+                @endforelse
+
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Menu Atur Menu -->
+    <div id="menu" class="tab-content hidden">
+        <table class="w-full border-collapse">
+            <thead>
+                <tr>
+                    <th class="bg-[#1e40af] p-[13px] text-left">No</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">Menu</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">Aksi</th>
+                    <th class="bg-[#1e40af] p-[13px] text-left">Hak Akses</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @forelse ($kelas as $item)
+                    <tr>
+                        <td class="border border-[#ddd] p-1">
+                            {{ $loop->iteration }}
+                        </td>
+
+                        <td class="border border-[#ddd] p-1">
+                            {{ $item->nama_kelas }}
+                        </td>
+
+                        
+                        <td class="border border-[#ddd] p-2">
+                            <button class="bg-yellow-400 px-2 py-1 rounded">
+                                Edit
+                            </button>
+
+                            <button class="bg-red-500 text-white px-2 py-1 rounded">
+                                Hapus
+                            </button>
+                        </td>
+
+                        <td class="border border-[#ddd] p-1">
+                            {{ $item->tingkat }}
                         </td>
                     </tr>
 
