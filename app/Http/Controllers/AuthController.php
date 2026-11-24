@@ -23,7 +23,7 @@ class AuthController extends Controller
         ]);
 
         // mencari user berdasarkan email
-        $user = User::with('roles')
+        $user = User::with('role')
                 ->where('email', $credentials['email'])
                 ->first();
 
@@ -48,15 +48,19 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         // mengambil role user
-        $roles = $user->roles->pluck('name');
+        $roles = $user->role?->name;
 
         // mengarahkan berdasarkan role
-        if ($roles->contains('admin')) {
+        if ($roles === 'admin') {
             return redirect()->route('admin.dashboard');
         }
 
-        if ($roles->contains('guru')) {
+        if ($roles === 'guru') {
             return redirect()->route('guru.dashboard');
+        }
+
+        if ($roles === 'siswa') {
+            return redirect()->route('siswa.dashboard');
         }
 
         // logout jika tidak memiliki role

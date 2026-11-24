@@ -14,7 +14,7 @@ class AdminController extends Controller
     public function dashboard()
     {
         // mengambil semua user dgn rolenya
-        $users = User::with('roles')->get();
+        $users = User::with('role')->get();
 
         // mengambil seluruh data guru
         $gurus = Guru::all();
@@ -25,7 +25,7 @@ class AdminController extends Controller
             ->get();
 
         // Mengambil akun yang memiliki role guru
-        $guruUsers = User::whereHas('roles', function ($query) {
+        $guruUsers = User::whereHas('role', function ($query) {
             $query->where('name', 'guru');
         })->get();
 
@@ -40,7 +40,7 @@ class AdminController extends Controller
             'kelas_id' => 'required|exists:kelas,id',
         ]);
 
-        $guru = User::whereHas('roles', function ($query) {
+        $guru = User::whereHas('role', function ($query) {
             $query->where('name', 'guru');
         })->findOrFail($request->user_id);
 

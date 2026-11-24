@@ -62,11 +62,11 @@
                         @endif
                     </td>
                     <td class="border border-[#ddd] p-1">
-                        @forelse ($user->roles as $role)
-                            {{ ucfirst($role->name) }}
-                        @empty
+                        @if ($user->role)
+                            {{ ucfirst($user->role->name) }}
+                        @else
                             Belum memiliki role
-                        @endforelse
+                        @endif
                     </td>
                 </tr>
             @empty

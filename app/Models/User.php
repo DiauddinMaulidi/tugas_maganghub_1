@@ -9,8 +9,10 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Kelas;
+use App\Models\Role;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
@@ -22,7 +24,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_active'
+        'is_active',
+        'role_id',
     ];
 
     protected $hidden =[
@@ -30,12 +33,9 @@ class User extends Authenticatable
         'remember_token'
     ];
 
-    public function roles(): BelongsToMany
+    public function role(): BelongsTo
     {
-        return $this->belongsToMany(
-            Role::class,
-            'user_roles'
-        )->withTimestamps();
+        return $this->belongsTo(Role::class);
     }
 
     public function kelasAbsensi()
@@ -45,6 +45,6 @@ class User extends Authenticatable
             'guru_kelas',
             'user_id',
             'kelas_id'
-        );
+        )->withTimestamps();
     }
 }

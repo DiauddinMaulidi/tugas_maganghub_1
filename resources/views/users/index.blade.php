@@ -85,11 +85,11 @@
                         @endif
                     </td>
                     <td>
-                        @forelse ($user->roles as $role)
-                            {{ ucfirst($role->name) }}
-                        @empty
-                            Belum memiliki role
-                        @endforelse
+                        @if ($user->role)
+                            {{ ucfirst($user->role->name) }}
+                        @else
+                            belum memiliki role
+                        @endif
                     </td>
                 </tr>
             @empty

@@ -18,9 +18,10 @@ class RoleMiddleware
         // memriksa apakah user memiliki role
         $user = Auth::user();
 
-        $hasRole = $user->roles()
-            ->whereIn('name', $roles)
-            ->exists();
+        $hasRole = $user->role && in_array(
+            $user->role->name,
+            $roles
+        );
 
         if (!$hasRole) {
             abort(403, 'Anda tidak memiliki akses ke halaman ini.');

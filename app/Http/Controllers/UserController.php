@@ -11,7 +11,7 @@ class UserController extends Controller
     public function index()
     {
         // mengambil semua user dgn rolenya
-        $users = User::with('roles')->get();
+        $users = User::with('role')->get();
 
         // mengirim data ke halaman Blade
         return view('users.index', compact('users'));

@@ -23,7 +23,7 @@ class GuruController extends Controller
     public function dashboard() {
         $guru = Auth::user();
         // Pastikan akun memiliki role guru
-        if (!$guru->roles()->where('name', 'guru')->exists()) {
+        if (!$guru->role || $guru->role->name !== 'guru') {
             abort(403, 'Anda tidak memiliki akses sebagai guru.');
         }
         // Ambil kelas yang ditugaskan kepada guru
@@ -51,6 +51,7 @@ class GuruController extends Controller
 
     public function simpanAbsensi(Request $request, $id) {
         $guru = Auth::user();
+        
     }
 
 }
