@@ -33,9 +33,10 @@ class AdminController extends Controller
         $guruRole = Role::where('name', 'guru')->first();
 
         $menus = Menu::with(['roleMenus' => function ($query) use ($guruRole) {
-
             if ($guruRole) {
                 $query->where('role_id', $guruRole->id);
+            } else {
+                $query->whereRaw('1 = 0');
             }
         }])->get();
 

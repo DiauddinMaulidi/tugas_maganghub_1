@@ -39,15 +39,19 @@ Route::middleware('auth')->group(function () {
     });
 
     // Dashboard Guru
+    // Dashboard Guru
     Route::middleware('role:guru')->prefix('guru')->group(function () {
 
         Route::get('/dashboard', [GuruController::class, 'dashboard'])
+            ->middleware('permission:dashboard,can_view')
             ->name('guru.dashboard');
 
         Route::get('/kelas/{id}/absensi', [GuruController::class, 'absensi'])
+            ->middleware('permission:absensi,can_view')
             ->name('guru.absensi');
 
         Route::post('/kelas/{id}/absensi', [GuruController::class, 'simpanAbsensi'])
+            ->middleware('permission:absensi,can_create')
             ->name('guru.absensi.simpan');
     });
 });
@@ -55,12 +59,3 @@ Route::middleware('auth')->group(function () {
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/users', [UserController::class, 'index'])
-    ->name('users.index');
-
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
-    ->name('admin.dashboard');
-
-Route::post('/admin/guru-kelas', [AdminController::class, 'assignGuruKelas'])
-    ->name('admin.guru-kelas');

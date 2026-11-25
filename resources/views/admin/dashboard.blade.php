@@ -91,6 +91,7 @@
                         <th class="bg-[#1e40af] p-[13px] text-left">TTL</th>
                         <th class="bg-[#1e40af] p-[13px] text-left">Alamat</th>
                         <th class="bg-[#1e40af] p-[13px] text-left">Kelas</th>
+                        <th class="bg-[#1e40af] p-[13px] text-left">Aksi</th>
                     </tr>
                 </thead>
 
@@ -125,6 +126,16 @@
 
                         <td class="border border-[#ddd] p-1">
                             {{ $siswa->kelas ?? '-' }}
+                        </td>
+
+                        <td class="border border-[#ddd] p-2">
+                            <button class="bg-yellow-400 px-2 py-1 rounded">
+                                Edit
+                            </button>
+
+                            <button class="bg-red-500 text-white px-2 py-1 rounded">
+                                Hapus
+                            </button>
                         </td>
                     </tr>
 
