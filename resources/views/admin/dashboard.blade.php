@@ -264,54 +264,153 @@
 
         <!-- Menu Atur Menu -->
         <div id="menu" class="tab-content hidden">
-            <table class="w-full border-collapse">
-                <thead>
-                    <tr>
-                        <th class="bg-[#1e40af] p-[13px] text-left">No</th>
-                        <th class="bg-[#1e40af] p-[13px] text-left">Menu</th>
-                        <th class="bg-[#1e40af] p-[13px] text-left">Aksi</th>
-                        <th class="bg-[#1e40af] p-[13px] text-left">Hak Akses</th>
-                    </tr>
-                </thead>
 
-                <tbody>
-                    @forelse ($kelas as $item)
-                    <tr>
-                        <td class="border border-[#ddd] p-1">
-                            {{ $loop->iteration }}
-                        </td>
+            <div class="mb-5">
+                <h2 class="text-lg font-semibold">
+                    Pengaturan Hak Akses Guru
+                </h2>
+                <p class="text-gray-500 text-sm">
+                    Tentukan menu dan aktivitas yang boleh dilakukan Guru.
+                </p>
+            </div>
 
-                        <td class="border border-[#ddd] p-1">
-                            {{ $item->nama_kelas }}
-                        </td>
+            @if(session('success'))
+            <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                {{ session('success') }}
+            </div>
+            @endif
 
+            @if($errors->any())
+            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                @foreach($errors->all() as $error)
+                <p>{{ $error }}</p>
+                @endforeach
+            </div>
+            @endif
 
-                        <td class="border border-[#ddd] p-2">
-                            <button class="bg-yellow-400 px-2 py-1 rounded">
-                                Edit
-                            </button>
+            @if($guruRole)
 
-                            <button class="bg-red-500 text-white px-2 py-1 rounded">
-                                Hapus
-                            </button>
-                        </td>
+            <form action="{{ route('admin.hak-akses.update', $guruRole->id) }}"
+                method="POST">
 
-                        <td class="border border-[#ddd] p-1">
-                            {{ $item->tingkat }}
-                        </td>
-                    </tr>
+                @csrf
+                @method('PUT')
 
-                    @empty
-                    <tr>
-                        <td colspan="7" class="text-center p-4">
-                            Belum ada data kelas.
-                        </td>
-                    </tr>
-                    @endforelse
+                <div class="overflow-x-auto">
 
-                </tbody>
-            </table>
+                    <table class="w-full border-collapse">
+
+                        <thead>
+                            <tr>
+                                <th class="bg-[#1e40af] text-white p-3 text-left">
+                                    No
+                                </th>
+
+                                <th class="bg-[#1e40af] text-white p-3 text-left">
+                                    Nama Menu
+                                </th>
+
+                                <th class="bg-[#1e40af] text-white p-3">
+                                    Lihat
+                                </th>
+
+                                <th class="bg-[#1e40af] text-white p-3">
+                                    Tambah
+                                </th>
+
+                                <th class="bg-[#1e40af] text-white p-3">
+                                    Edit
+                                </th>
+
+                                <th class="bg-[#1e40af] text-white p-3">
+                                    Hapus
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @forelse($menus as $menu)
+
+                            @php
+                            $permission = $menu->roleMenus->first();
+                            @endphp
+
+                            <tr class="hover:bg-gray-50">
+
+                                <td class="border p-2">
+                                    {{ $loop->iteration }}
+                                </td>
+
+                                <td class="border p-2">
+                                    {{ $menu->nama_menu }}
+                                </td>
+
+                                @foreach([
+                                'can_view',
+                                'can_create',
+                                'can_edit',
+                                'can_delete'
+                                ] as $ability)
+
+                                <td class="border p-2 text-center">
+
+                                    <input
+                                        type="hidden"
+                                        name="permissions[{{ $menu->id }}][{{ $ability }}]"
+                                        value="0">
+
+                                    <input
+                                        type="checkbox"
+                                        name="permissions[{{ $menu->id }}][{{ $ability }}]"
+                                        value="1"
+                                        {{ $permission && $permission->$ability ? 'checked' : '' }}
+                                        class="w-5 h-5 cursor-pointer">
+
+                                </td>
+
+                                @endforeach
+
+                            </tr>
+
+                            @empty
+
+                            <tr>
+                                <td colspan="6" class="text-center p-4">
+                                    Belum ada menu.
+                                </td>
+                            </tr>
+
+                            @endforelse
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <div class="mt-5 flex justify-end">
+
+                    <button type="submit"
+                        class="bg-blue-600 text-white px-5 py-2 rounded
+                           hover:bg-blue-700">
+                        Simpan Hak Akses
+                    </button>
+
+                </div>
+
+            </form>
+
+            @else
+
+            <p class="text-red-500">
+                Role Guru belum tersedia.
+            </p>
+
+            @endif
+
         </div>
+
 
         <form action="{{ route('logout') }}" method="POST">
             @csrf

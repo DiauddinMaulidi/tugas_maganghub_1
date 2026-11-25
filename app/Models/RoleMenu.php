@@ -19,6 +19,16 @@ class RoleMenu extends Model
         'can_delete',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'can_view' => 'boolean',
+            'can_create' => 'boolean',
+            'can_edit' => 'boolean',
+            'can_delete' => 'boolean',
+        ];
+    }
+
     // relasi ke role
     public function role()
     {

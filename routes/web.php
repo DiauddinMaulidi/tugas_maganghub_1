@@ -5,12 +5,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\RoleMenuController;
 
 // halaman login untuk pengguna yang belum login
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])
         ->name('login');
-    
+
     Route::post('/login', [AuthController::class, 'login'])
         ->name('login.process');
 });
@@ -32,6 +33,9 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/guru-kelas', [AdminController::class, 'assignGuruKelas'])
             ->name('admin.guru-kelas');
+
+        Route::put('/hak-akses/{role}', [RoleMenuController::class, 'update'])
+            ->name('admin.hak-akses.update');
     });
 
     // Dashboard Guru

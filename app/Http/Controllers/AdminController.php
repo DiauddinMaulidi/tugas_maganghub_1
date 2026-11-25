@@ -6,7 +6,8 @@ use App\Models\User;
 use App\Models\Guru;
 use App\Models\Siswa;
 use App\Models\Kelas;
-
+use App\Models\Menu;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -29,8 +30,17 @@ class AdminController extends Controller
             $query->where('name', 'guru');
         })->get();
 
+        $guruRole = Role::where('name', 'guru')->first();
+
+        $menus = Menu::with(['roleMenus' => function ($query) use ($guruRole) {
+
+            if ($guruRole) {
+                $query->where('role_id', $guruRole->id);
+            }
+        }])->get();
+
         // mengirim data ke halaman Blade
-        return view('admin.dashboard', compact('users', 'gurus', 'siswas', 'kelas', 'guruUsers'));
+        return view('admin.dashboard', compact('users', 'gurus', 'siswas', 'kelas', 'guruUsers', 'guruRole', 'menus'));
     }
 
     public function assignGuruKelas(Request $request)
